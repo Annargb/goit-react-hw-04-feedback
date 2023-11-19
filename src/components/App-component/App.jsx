@@ -14,16 +14,18 @@ export const App = () => {
   const addStatistic = event => {
     const review = event.target.dataset.id;
 
-    if (review === 'good') {
-      setGood(prevState => prevState + 1);
-    }
-
-    if (review === 'neutral') {
-      setNeutral(prevState => prevState + 1);
-    }
-
-    if (review === 'bad') {
-      setBad(prevState => prevState + 1);
+    switch (review) {
+      case 'good':
+        setGood(prevState => prevState + 1);
+        break;
+      case 'neutral':
+        setNeutral(prevState => prevState + 1);
+        break;
+      case 'bad':
+        setBad(prevState => prevState + 1);
+        break;
+      default:
+        return;
     }
   };
 
@@ -34,13 +36,12 @@ export const App = () => {
 
   const total = countTotalFeedback();
   const positiveFeedbacks = countPositiveFeedbackPercentage();
-  const options = ['good', 'neutral', 'bad'];
 
   return (
     <Wrapper>
       <Section title="Please leave feedback">
         <FeedbackOptions
-          options={options}
+          options={Object.keys({ good, neutral, bad })}
           onLeaveFeedback={addStatistic}
         ></FeedbackOptions>
       </Section>
